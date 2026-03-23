@@ -55,11 +55,8 @@ class CreateAccountStep1Page extends GetView<CreateAccountController> {
                           title: "Player",
                           subtitle: "Join games and book courts",
                           value: "player",
-                          isSelected: controller.selectedRoles.contains(
-                            "player",
-                          ),
-
-                          onChanged: (_) => controller.toggleRole("player"),
+                          isSelected: controller.selectedRole.value == "player",
+onChanged: (_) => controller.selectRole("player"),
                         ),
                         Divider(height: 1),
                         RoleOptionCard(
@@ -67,11 +64,8 @@ class CreateAccountStep1Page extends GetView<CreateAccountController> {
                           title: "Venue Owner",
                           subtitle: "Manage your sports facility",
                           value: "venue_owner",
-                          isSelected: controller.selectedRoles.contains(
-                            "venue_owner",
-                          ),
-                          onChanged: (_) =>
-                              controller.toggleRole("venue_owner"),
+                          isSelected: controller.selectedRole.value == "venue_owner",
+onChanged: (_) => controller.selectRole("venue_owner"),
                         ),
                       ],
                     ),

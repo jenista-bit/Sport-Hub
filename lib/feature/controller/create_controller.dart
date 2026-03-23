@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CreateAccountController extends GetxController {
-  final RxList<String> selectedRoles = <String>[].obs;
+  final RxnString selectedRole = RxnString();
 
   final fullNameController = TextEditingController();
   final favoriteSportsController = TextEditingController();
@@ -14,28 +14,21 @@ class CreateAccountController extends GetxController {
   final roleKey = GlobalKey();
   final fullNameKey = GlobalKey();
 
-  void toggleRole(String role) {
-    if (selectedRoles.contains(role)) {
-      selectedRoles.remove(role);
-    } else {
-      selectedRoles.add(role);
-    }
+void selectRole(String role) {
+  selectedRole.value = role;
+  showRoleError.value = false;
+}
 
-    if (selectedRoles.isNotEmpty) {
-      showRoleError.value = false;
-    }
+bool validateRole() {
+  showRoleError.value = false;
+
+  if (selectedRole.value == null) {
+    showRoleError.value = true;
+    return false;
   }
 
-  bool validateRole() {
-    showRoleError.value = false;
-
-    if (selectedRoles.isEmpty) {
-      showRoleError.value = true;
-      return false;
-    }
-
-    return true;
-  }
+  return true;
+}
 
   void scrollTo(GlobalKey key) {
     final context = key.currentContext;

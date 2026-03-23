@@ -32,65 +32,74 @@ class RoleOptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTap?.call();
-        onChanged?.call(!isSelected);
-      },
-      child: Container(
-        padding: EdgeInsets.all(AppSizes.md),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.accent.withOpacity(0.08)
-              : AppColors.surface,
-          borderRadius: AppRadius.allMd,
-          border: Border.all(
-            color: isSelected ? AppColors.accent : AppColors.divider,
-            width: isSelected ? 1.8 : 1,
+  onTap?.call();
+  onChanged?.call(true);
+},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Container(
+          padding: EdgeInsets.all(AppSizes.md),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.accent.withOpacity(0.08)
+                : AppColors.surface,
+            borderRadius: AppRadius.allMd,
+            border: Border.all(
+              color: isSelected ? AppColors.accent : AppColors.divider,
+              width: isSelected ? 1.8 : 1,
+            ),
           ),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 32.sp,
-              color: isSelected ? AppColors.accent : AppColors.textSecondary,
-            ),
-
-            SizedBox(width: AppSizes.md),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppText(
-                    title,
-                    style: AppTextStyles.bodyLg.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: isSelected
-                          ? AppColors.accent
-                          : AppColors.textPrimary,
-                    ),
-                  ),
-
-                  SizedBox(height: 2.h),
-
-                  AppText(
-                    subtitle,
-                    style: AppTextStyles.bodyMd.copyWith(
-                      color: isSelected
-                          ? AppColors.black
-                          : AppColors.textSecondary,
-                    ),
-                  ),
-                ],
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 32.sp,
+                color: isSelected ? AppColors.accent : AppColors.textSecondary,
               ),
-            ),
-
-            Checkbox(
-              value: isSelected,
-              activeColor: AppColors.accent,
-              onChanged: onChanged,
-            ),
-          ],
+        
+              SizedBox(width: AppSizes.md),
+        
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      title,
+                      style: AppTextStyles.bodyLg.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? AppColors.accent
+                            : AppColors.textPrimary,
+                      ),
+                    ),
+        
+                    SizedBox(height: 2.h),
+        
+                    AppText(
+                      subtitle,
+                      style: AppTextStyles.bodyMd.copyWith(
+                        color: isSelected
+                            ? AppColors.black
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+        
+            Radio<bool>(
+          value: true,
+          groupValue: isSelected,
+          fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.selected)) {
+        return AppColors.accent;
+            }
+            return AppColors.textSecondary; // 👈 inactive color
+          }),
+          onChanged: (_) => onChanged?.call(true),
+        ),
+            ],
+          ),
         ),
       ),
     );
